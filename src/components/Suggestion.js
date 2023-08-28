@@ -1,10 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { TextField, Paper, MenuItem, Grid, Autocomplete } from "@mui/material";
+import { TextField, Paper, MenuItem, Grid, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { searchMovies } from "../redux/search";
 import Downshift from "downshift";
 import { Link } from "react-router-dom";
 import { IMAGES_PATH, COVER_PLACEHOLDER } from "../config";
+import { styled } from "@mui/material";
+
+const PaperStyled = styled(Paper)({
+  backgroundColor: "darkgoldenrod",
+  top: -40,
+  position: "relative",
+});
+
+const MenuItemStyled = styled(MenuItem)({
+  paddingTop: 5,
+  paddingBottom: 5,
+});
+
+const ImgStyled = styled("img")({
+  height: "100%",
+});
+
+const LinkStyled = styled(Link)({
+  display: "block",
+  textDecoration: "none",
+});
 
 const Suggestion = (movies) => {
   const dispatch = useDispatch();
@@ -59,7 +80,7 @@ const Suggestion = (movies) => {
             }}
           />
           {isOpen ? (
-            <Paper square={true} {...getMenuProps()}>
+            <PaperStyled square={true} {...getMenuProps()}>
               {movies.movies.results
                 .slice(0, 10)
                 // .filter(
@@ -68,7 +89,7 @@ const Suggestion = (movies) => {
                 //     item.title.tolowerCase().includes(inputValue.toLowerCase())
                 // )
                 .map((item, index) => (
-                  <MenuItem
+                  <MenuItemStyled
                     {...getItemProps({
                       item,
                       key: item.id,
@@ -78,24 +99,34 @@ const Suggestion = (movies) => {
                       },
                     })}
                   >
-                    <Link to={`/movie/${item.id}`}>
+                    <LinkStyled to={`/movie/${item.id}`}>
                       <Grid container={true} spacing={8}>
                         <Grid item={true}>
                           {item.poster_path ? (
-                            <img
+                            <ImgStyled
                               src={`${IMAGES_PATH}/w92${item.poster_path}`}
                               alt={item.title}
                             />
                           ) : (
-                            <img src={COVER_PLACEHOLDER} alt={item.title} />
+                            <ImgStyled
+                              src={COVER_PLACEHOLDER}
+                              alt={item.title}
+                            />
                           )}
                         </Grid>
-                        <Grid item={true}></Grid>
+                        <Grid item={true}>
+                                <Typography variant="h4">
+                                    {item.title}
+                                </Typography>
+                                <Typography variant="caption">
+                                    {item.title}
+                                </Typography>
+                        </Grid>
                       </Grid>
-                    </Link>
-                  </MenuItem>
+                    </LinkStyled>
+                  </MenuItemStyled>
                 ))}
-            </Paper>
+            </PaperStyled>
           ) : null}
         </div>
       )}
