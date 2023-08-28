@@ -1,5 +1,5 @@
-import React from "react";
-import { TextField, Paper, MenuItem, Grid } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { TextField, Paper, MenuItem, Grid, Autocomplete } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { searchMovies } from "../redux/search";
 import Downshift from "downshift";
@@ -17,7 +17,24 @@ const Suggestion = (movies) => {
     dispatch(searchMovies(event.target.value));
   };
 
+  //   const [movieList, setMovieList] = useState([]);
+
+  //   useEffect(() => {
+  //     setMovieList(movies.movies.results);
+  //   }, [movies]);
+
   return (
+    // <Autocomplete
+    //   filterOptions={(x) => x}
+    //   disablePortal
+    //   id="combo-box-demo"
+    //   options={movieList}
+    //   getOptionLabel={(option) => option.title}
+    //   sx={{ width: 300 }}
+    //   renderInput={(params) => (
+    //     <TextField {...params} label="Movie" onChange={inputOnChange} />
+    //   )}
+    // />
     <Downshift>
       {({
         getInputProps,
@@ -43,13 +60,13 @@ const Suggestion = (movies) => {
           />
           {isOpen ? (
             <Paper square={true} {...getMenuProps()}>
-              {movies.results
+              {movies.movies.results
                 .slice(0, 10)
-                .filter(
-                  (item) =>
-                    !inputValue ||
-                    item.title.tolowerCase().includes(inputValue.toLowerCase())
-                )
+                // .filter(
+                //   (item) =>
+                //     !inputValue ||
+                //     item.title.tolowerCase().includes(inputValue.toLowerCase())
+                // )
                 .map((item, index) => (
                   <MenuItem
                     {...getItemProps({

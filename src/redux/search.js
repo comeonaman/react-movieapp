@@ -19,6 +19,7 @@ const searchSlice = createSlice({
             };
         },
         fetchedSearchMovies: (state, action) => {
+            console.log(action);
             return {
                 ...state,
                 isFetching: false,
