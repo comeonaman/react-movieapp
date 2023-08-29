@@ -6,6 +6,15 @@ export default class TheMovieDbApi {
         this.apiKey = apiKey;
     }
 
+    getPopularMovies = async (page = 1) => {
+        const response = await fetch(
+        `${this.apiBaseUrl}/movie/popular?api_key=${this.apiKey}&page=${page}`
+        );
+
+        return response.json();
+    }
+
+
     searchMovies = async (query) => {
         const response = await fetch(
         `${this.apiBaseUrl}/search/movie?api_key=${this.apiKey}&query=${query}`
@@ -16,7 +25,7 @@ export default class TheMovieDbApi {
 
     getGenres = async () => {
         const response = await fetch(
-        `${this.apiBaseUrl}/genre/movie?api_key=${this.apiKey}`
+        `${this.apiBaseUrl}/genre/movie/list?api_key=${this.apiKey}`
         );
 
         return response.json();
